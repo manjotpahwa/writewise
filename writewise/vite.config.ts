@@ -13,7 +13,6 @@ export default defineConfig({
     rollupOptions: {
       input: {
         popup: resolve(__dirname, 'src/popup/index.html'),
-        background: resolve(__dirname, 'src/background/background.ts'),
         content: resolve(__dirname, 'src/content/content.tsx'),
         dashboard: resolve(__dirname, 'src/dashboard/index.html'),
         'ai-worker': resolve(__dirname, 'src/workers/ai-worker.ts'),
@@ -31,11 +30,14 @@ export default defineConfig({
             return '[name].[ext]';
           }
           return 'assets/[name].[ext]';
-        }
+        },
+        format: 'es',
+        inlineDynamicImports: false
       }
     },
     outDir: 'dist',
-    emptyOutDir: true
+    emptyOutDir: true,
+    copyPublicDir: true
   },
   define: {
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)

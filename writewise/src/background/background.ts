@@ -64,7 +64,7 @@ class BackgroundManager {
           break;
 
         case 'openDashboard':
-          const dashboardUrl = chrome.runtime.getURL('dashboard.html');
+          const dashboardUrl = chrome.runtime.getURL('src/dashboard/index.html');
           await chrome.tabs.create({ url: dashboardUrl });
           sendResponse({ success: true });
           break;
@@ -72,9 +72,9 @@ class BackgroundManager {
         default:
           sendResponse({ success: false, error: 'Unknown action' });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Background message handler error:', error);
-      sendResponse({ success: false, error: error.message });
+      sendResponse({ success: false, error: error?.message || 'Unknown error' });
     }
   }
 
@@ -160,7 +160,7 @@ chrome.runtime.onInstalled.addListener(async (details) => {
     await StorageManager.getInstance().createDefaultProfile('user@example.com');
     
     // Open welcome page
-    const welcomeUrl = chrome.runtime.getURL('dashboard.html?welcome=true');
+    const welcomeUrl = chrome.runtime.getURL('src/dashboard/index.html?welcome=true');
     chrome.tabs.create({ url: welcomeUrl });
   }
 });
@@ -171,7 +171,7 @@ chrome.runtime.onStartup.addListener(() => {
 });
 
 // Keep service worker alive
-let keepAliveInterval: NodeJS.Timeout;
+let keepAliveInterval: number;
 
 function keepAlive() {
   keepAliveInterval = setInterval(() => {

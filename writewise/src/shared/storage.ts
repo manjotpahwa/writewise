@@ -172,7 +172,7 @@ export class StorageManager {
       url: window.location.hostname
     };
 
-    analytics.push(record);
+    (analytics as any[]).push(record);
 
     // Keep only last 500 events
     if (analytics.length > 500) {

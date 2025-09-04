@@ -32,10 +32,10 @@ class AIWorker {
         type: 'initialized',
         data: { success: true }
       });
-    } catch (error) {
+    } catch (error: any) {
       self.postMessage({
         type: 'error',
-        data: { error: error.message }
+        data: { error: error?.message || 'AI initialization failed' }
       });
     }
   }
